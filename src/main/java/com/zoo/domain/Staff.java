@@ -1,9 +1,14 @@
 package com.zoo.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -19,34 +24,39 @@ public class Staff {
 	private char gender;
 	
 	@Column(name="supervisor_id")
-	private Long supervisorID;
+	private Long supervisor;
 	
 	private String specialization; 
 	
-	@Column(name="division_id", nullable=false)
-	private Long divisionID;
+	@ManyToOne//(targetEntity=Division.class)
+	@JoinColumn(name="division_id")
+//	@Column(name="division_id")
+	private Division division;
+	
+	@OneToMany(mappedBy="responsiblePerson")
+	private List<Animal> animalList;
 	
 	protected Staff(){}
 
 	public Staff(String name, String surname, char gender,
 //			Long supervisorID, String specialization, 
-	Long divisionID) 
+	Division divisionID) 
 	{
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
 //		this.supervisorID = supervisorID;
 //		this.specialization = specialization;
-		this.divisionID = divisionID;
+		this.division = divisionID;
 	}
 
 	@Override
 	public String toString() {
 		return "Staff [id=" + id + ", name=" + name + ", surname=" + surname + ", gender=" + gender + ", supervisorID="
-				+ supervisorID + ", specialization=" + specialization + ", divisionID=" + divisionID + "]";
+				+ supervisor + ", specialization=" + specialization + ", divisionID=" + division + "]";
 	}
 	
-	//getters
+	//getters and setters
 
 	public Long getId() {
 		return id;
@@ -65,15 +75,43 @@ public class Staff {
 	}
 
 	public Long getSupervisorID() {
-		return supervisorID;
+		return supervisor;
 	}
 
 	public String getSpecialization() {
 		return specialization;
 	}
 
-	public Long getDivisionID() {
-		return divisionID;
+	public Division getDivisionID() {
+		return division;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public void setGender(char gender) {
+		this.gender = gender;
+	}
+
+	public void setSupervisorID(Long supervisorID) {
+		this.supervisor = supervisorID;
+	}
+
+	public void setSpecialization(String specialization) {
+		this.specialization = specialization;
+	}
+
+	public void setDivisionID(Division divisionID) {
+		this.division = divisionID;
 	}
 	
 	

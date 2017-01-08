@@ -10,12 +10,12 @@ import org.springframework.data.repository.Repository;
 @NoRepositoryBean //ensures that Spring Data JPA doesn’t try to create an implementation for our base repository interface
 public interface BaseRepository <T, ID extends Serializable>  extends Repository<T, ID>{
 	
-	void delete(T deleted);
+	void delete(T toDelete);
 	 
-    List<T> findAll();
+	List<T> findAll();
      
     Optional<T> findOne(ID id);
  
-    T save(T persisted);
+    T save(T toPersist);
 
 }

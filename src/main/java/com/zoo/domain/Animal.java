@@ -36,9 +36,9 @@ public class Animal {
 	@Column(name="arrival_date")
 	private Date arrivalDate;
 	
-	@ManyToOne()
-	@JoinColumn(name="responsible_person_id", nullable=false)
-	private Long responsiblePersonID;
+	@ManyToOne
+	@JoinColumn(name="responsible_person_id")
+	private Staff responsiblePerson;
 	
 	
 	protected Animal(){}
@@ -46,7 +46,7 @@ public class Animal {
 	public Animal(String name, String spieces, char gender,
 //	, Long motherId, Long fatherId, Date birthDate,
 //			Date arrivalDate, 
-	Long responsiblePersonID) 
+	Staff responsiblePerson) 
 	{
 		this.name = name;
 		this.spieces = spieces;
@@ -55,13 +55,86 @@ public class Animal {
 //		this.fatherId = fatherId;
 //		this.birthDate = birthDate;
 //		this.arrivalDate = arrivalDate;
-		this.responsiblePersonID = responsiblePersonID;
+		this.responsiblePerson = responsiblePerson;
 	}
 	
 	@Override
 	public String toString() {
 		return "Animal [id=" + id + ", name=" + name + ", spieces=" + spieces + ", gender=" + gender + ", motherId="
 				+ motherID + ", fatherId=" + fatherID + ", birthDate=" + birthDate + ", arrivalDate=" + arrivalDate
-				+ ", responsiblePerson=" + responsiblePersonID + "]";
+				+ ", responsiblePerson=" + responsiblePerson + "]";
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getSpieces() {
+		return spieces;
+	}
+
+	public char getGender() {
+		return gender;
+	}
+
+	public Long getMotherID() {
+		return motherID;
+	}
+
+	public Long getFatherID() {
+		return fatherID;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public Date getArrivalDate() {
+		return arrivalDate;
+	}
+
+	public Staff getResponsiblePersonID() {
+		return responsiblePerson;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSpieces(String spieces) {
+		this.spieces = spieces;
+	}
+
+	public void setGender(char gender) {
+		this.gender = gender;
+	}
+
+	public void setMotherID(Long motherID) {
+		this.motherID = motherID;
+	}
+
+	public void setFatherID(Long fatherID) {
+		this.fatherID = fatherID;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public void setArrivalDate(Date arrivalDate) {
+		this.arrivalDate = arrivalDate;
+	}
+
+	public void setResponsiblePersonID(Staff responsiblePerson) {
+		this.responsiblePerson = responsiblePerson;
 	}	
+	
 }

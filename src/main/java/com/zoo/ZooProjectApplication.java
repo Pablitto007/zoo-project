@@ -1,13 +1,18 @@
 package com.zoo;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
 import com.zoo.domain.Animal;
+import com.zoo.domain.Staff;
 import com.zoo.repository.AnimalRepository;
+import com.zoo.repository.StaffRepository;
 
 
 @SpringBootApplication
@@ -19,10 +24,12 @@ public class ZooProjectApplication {
 		SpringApplication.run(ZooProjectApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner demo(AnimalRepository repository) {
+	public CommandLineRunner demo(AnimalRepository repository, StaffRepository staffRepo) {
 		return (args) -> {
-			// save a couple of animals
-			repository.save(new Animal("Bruno", "Lion", 'M'));
+			// save a couple of staff
+			Optional<Staff> opt = staffRepo.findOne(7L);
+			Staff staff = opt.get();
+			repository.save(new Animal("Cecil", "Lion", 'M', staff));
 
 
 			// fetch all animals
@@ -34,10 +41,10 @@ public class ZooProjectApplication {
 			log.info("");
 
 			// fetch an individual customer by ID
-			Animal customer = repository.findOne(1L);
+			Optional<Animal> optional = repository.findOne(1L);
 			log.info("Customer found with findOne(1L):");
 			log.info("--------------------------------");
-			log.info(customer.toString());
+			log.info(optional.get().toString());
 			log.info("");
 
 			
