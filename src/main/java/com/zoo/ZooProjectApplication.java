@@ -35,7 +35,7 @@ public class ZooProjectApplication {
 			// fetch all animals
 			log.info("Animals found with findAll():");
 			log.info("-------------------------------");
-			for (Animal animal : repository.findAll()) {
+			for (Animal animal : repository.findByNameIgnoreCase("CEcIl")) {
 				log.info(animal.toString());
 			}
 			log.info("");

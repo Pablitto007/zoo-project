@@ -1,6 +1,6 @@
 package com.zoo.domain;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="Animals")
@@ -20,21 +22,20 @@ public class Animal {
 	@GeneratedValue(generator="animalSeqGen")
 	private Long id;
 	
+	@Column(nullable=false)
 	private String name;
+	@Column(nullable=false)
 	private String spieces;
+	
 	private char gender;
 	
-	@Column(name="father_id")
-	private Long motherID;
-	
-	@Column(name="mother_id")
-	private Long fatherID;
-	
 	@Column(name="birth_date", nullable=false)
-	private Date birthDate;
+	@Temporal(TemporalType.DATE)
+	LocalDate birthDate;
 	
 	@Column(name="arrival_date")
-	private Date arrivalDate;
+	@Temporal(TemporalType.DATE)
+	LocalDate arrivalDate;
 	
 	@ManyToOne
 	@JoinColumn(name="responsible_person_id")
@@ -44,24 +45,21 @@ public class Animal {
 	protected Animal(){}
 
 	public Animal(String name, String spieces, char gender,
-//	, Long motherId, Long fatherId, Date birthDate,
-//			Date arrivalDate, 
+			LocalDate birthDate, LocalDate arrivalDate, 
 	Staff responsiblePerson) 
 	{
 		this.name = name;
 		this.spieces = spieces;
 		this.gender = gender;
-//		this.motherId = motherId;
-//		this.fatherId = fatherId;
-//		this.birthDate = birthDate;
-//		this.arrivalDate = arrivalDate;
+		this.birthDate = birthDate;
+		this.arrivalDate = arrivalDate;
 		this.responsiblePerson = responsiblePerson;
 	}
 	
 	@Override
 	public String toString() {
-		return "Animal [id=" + id + ", name=" + name + ", spieces=" + spieces + ", gender=" + gender + ", motherId="
-				+ motherID + ", fatherId=" + fatherID + ", birthDate=" + birthDate + ", arrivalDate=" + arrivalDate
+		return "Animal [id=" + id + ", name=" + name + ", spieces=" + spieces + ", gender=" + gender 
+				+  ", birthDate=" + birthDate + ", arrivalDate=" + arrivalDate
 				+ ", responsiblePerson=" + responsiblePerson + "]";
 	}
 
@@ -81,19 +79,12 @@ public class Animal {
 		return gender;
 	}
 
-	public Long getMotherID() {
-		return motherID;
-	}
 
-	public Long getFatherID() {
-		return fatherID;
-	}
-
-	public Date getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public Date getArrivalDate() {
+	public LocalDate getArrivalDate() {
 		return arrivalDate;
 	}
 
@@ -117,19 +108,12 @@ public class Animal {
 		this.gender = gender;
 	}
 
-	public void setMotherID(Long motherID) {
-		this.motherID = motherID;
-	}
 
-	public void setFatherID(Long fatherID) {
-		this.fatherID = fatherID;
-	}
-
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
-	public void setArrivalDate(Date arrivalDate) {
+	public void setArrivalDate(LocalDate arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
 
