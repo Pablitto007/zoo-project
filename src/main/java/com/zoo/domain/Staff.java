@@ -11,6 +11,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * 
+ * @author Paweł (Pablitto007)
+ */
 @Entity
 public class Staff {
 	
@@ -28,9 +32,8 @@ public class Staff {
 	
 	private String specialization; 
 	
-	@ManyToOne//(targetEntity=Division.class)
+	@ManyToOne
 	@JoinColumn(name="division_id")
-//	@Column(name="division_id")
 	private Division division;
 	
 	@OneToMany(mappedBy="responsiblePerson")

@@ -1,5 +1,7 @@
 package com.zoo;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -29,7 +31,8 @@ public class ZooProjectApplication {
 			// save a couple of staff
 			Optional<Staff> opt = staffRepo.findOne(7L);
 			Staff staff = opt.get();
-			repository.save(new Animal("Cecil", "Lion", 'M', staff));
+			repository.save(new Animal("Cecil", "Lion", 'M', 
+					LocalDate.of(2013, Month.APRIL, 20), LocalDate.of(2013, Month.APRIL, 20),staff));
 
 
 			// fetch all animals
@@ -41,10 +44,10 @@ public class ZooProjectApplication {
 			log.info("");
 
 			// fetch an individual customer by ID
-			Optional<Animal> optional = repository.findOne(1L);
-			log.info("Customer found with findOne(1L):");
-			log.info("--------------------------------");
-			log.info(optional.get().toString());
+//			Optional<Animal> optional = repository.findOne(1L);
+//			log.info("Customer found with findOne(1L):");
+//			log.info("--------------------------------");
+//			log.info(optional.get().toString());
 			log.info("");
 
 			

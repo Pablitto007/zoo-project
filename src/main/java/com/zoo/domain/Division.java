@@ -9,6 +9,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author Paweł (Pablitto007)
+ */
 @Entity
 @Table(name="Divisions")
 public class Division {

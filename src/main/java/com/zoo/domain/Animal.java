@@ -10,9 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
+/**
+ * 
+ * @author Paweł (Pablitto007)
+ */
 @Entity
 @Table(name="Animals")
 public class Animal {
@@ -30,11 +31,9 @@ public class Animal {
 	private char gender;
 	
 	@Column(name="birth_date", nullable=false)
-	@Temporal(TemporalType.DATE)
 	LocalDate birthDate;
 	
 	@Column(name="arrival_date")
-	@Temporal(TemporalType.DATE)
 	LocalDate arrivalDate;
 	
 	@ManyToOne
