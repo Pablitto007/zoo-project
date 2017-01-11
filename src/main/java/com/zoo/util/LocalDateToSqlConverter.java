@@ -5,7 +5,11 @@ import java.time.LocalDate;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-
+/**
+ * LocalDate need to be converted to SqlDate (it's not supported -released earlier)
+ * in JPA yet (2.1 at the moment))
+ * @author Paweł
+ */
 @Converter(autoApply = true)
 public class LocalDateToSqlConverter implements AttributeConverter<LocalDate, Date> {
 	
