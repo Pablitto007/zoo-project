@@ -42,14 +42,15 @@ public class Staff {
 	protected Staff(){}
 
 	public Staff(String name, String surname, char gender,
-//			Long supervisorID, String specialization, 
+//			Long supervisorID, 
+		String specialization, 
 	Division divisionID) 
 	{
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
 //		this.supervisorID = supervisorID;
-//		this.specialization = specialization;
+		this.specialization = specialization;
 		this.division = divisionID;
 	}
 

@@ -6,38 +6,38 @@
 	INSERT INTO DIVISIONS (id, NAME) VALUES (SEQ_DIVISONS.NEXTVAL, 'CLEANING');
 
   INSERT INTO STAFF (id, NAME, SURNAME, GENDER, SUPERVISOR_ID, SPECIALIZATION, DIVISION_ID) VALUES 
-  (SEQ_STAFF.nextval, 'Ala' , 'Abranowska' , 'f', null, 'Mammals', 1);
+  (SEQ_STAFF.nextval, 'Al' , 'Abranow' , 'f', null, 'Mammals', 1);
   
   INSERT INTO STAFF (id, NAME, SURNAME, GENDER, SUPERVISOR_ID, SPECIALIZATION, DIVISION_ID) VALUES 
-  (SEQ_STAFF.nextval, 'Beata', 'Brunowska', 
+  (SEQ_STAFF.nextval, 'Betty', 'Brunowska', 
   'F', null, 'Birds', 2); 
   
   INSERT INTO STAFF (id, NAME, SURNAME, GENDER, SUPERVISOR_ID, SPECIALIZATION, DIVISION_ID) VALUES 
-  (SEQ_STAFF.nextval, 'Cezary', 'Cejrowski', 'M', null, 'Reptiles', 3);
+  (SEQ_STAFF.nextval, 'Cezar', 'Cejrus', 'M', null, 'Reptiles', 3);
   
   INSERT INTO STAFF (id, NAME, SURNAME, GENDER, SUPERVISOR_ID, SPECIALIZATION, DIVISION_ID) VALUES 
-  (SEQ_STAFF.nextval, 'Dominik' , 'Dmowski',  'M', null, null, 4);
+  (SEQ_STAFF.nextval, 'Dominik' , 'De Vitto',  'M', null, null, 4);
   
   INSERT INTO STAFF (id, NAME, SURNAME, GENDER, SUPERVISOR_ID, SPECIALIZATION, DIVISION_ID) VALUES 
-  (SEQ_STAFF.nextval, 'Ewa', 'Edek',  'F', null, null, 4);
+  (SEQ_STAFF.nextval, 'Eve', 'Evans',  'F', null, null, 4);
 
   INSERT INTO ANIMALS (ID, NAME, SPIECES, GENDER, BIRTH_DATE,
   ARRIVAL_DATE, RESPONSIBLE_PERSON_ID) VALUES
-  (SEQ_ANIMALS.nextval, 'Bruno' , 'lion', 'M',
-  '2003-01-01', '2005-01-01' , 1);
+  (SEQ_ANIMALS.nextval, 'Anatol' , 'lion', 'M',
+  '2013-01-01', '2015-01-01' , 1);
   
   INSERT INTO ANIMALS (ID, NAME, SPIECES, GENDER, BIRTH_DATE,
   ARRIVAL_DATE, RESPONSIBLE_PERSON_ID) VALUES
-  (SEQ_ANIMALS.nextval, 'Eleonora' , 'Cobra', 'M',
+  (SEQ_ANIMALS.nextval, 'Snaky' , 'Cobra', 'M',
   '2003-10-01', null , 3); /*to_date('2003/10/01', 'yyyy/mm/dd') in Oracle*/
   
   INSERT INTO ANIMALS (ID, NAME, SPIECES, GENDER, BIRTH_DATE,
   ARRIVAL_DATE, RESPONSIBLE_PERSON_ID) VALUES
-  (SEQ_ANIMALS.nextval, 'Amelia' , 'lion', 'F',  
+  (SEQ_ANIMALS.nextval, 'Opera' , 'lion', 'F',  
   '2008-11-11', null , 1);
   
   
   INSERT INTO ANIMALS (ID, NAME, SPIECES, GENDER, BIRTH_DATE,
   ARRIVAL_DATE, RESPONSIBLE_PERSON_ID) VALUES
-  (SEQ_ANIMALS.nextvAL, 'Dominik' , 'turtle', 'M', 
+  (SEQ_ANIMALS.nextvAL, 'Donald' , 'turtle', 'M', 
   '2010-01-01', '2010-01-01', 3);

@@ -29,8 +29,7 @@ public class Division {
 	
 	protected Division(){}
 
-	public Division(Integer id, String name) {
-		this.id = id;
+	public Division(String name) {
 		this.name = name;
 	}
 

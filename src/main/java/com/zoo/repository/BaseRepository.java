@@ -17,5 +17,7 @@ public interface BaseRepository <T, ID extends Serializable>  extends Repository
     Optional<T> findOne(ID id);
  
     T save(T toPersist);
+    
+    long count();
 
 }

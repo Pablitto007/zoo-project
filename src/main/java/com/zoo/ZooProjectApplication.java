@@ -29,16 +29,16 @@ public class ZooProjectApplication {
 	public CommandLineRunner demo(AnimalRepository repository, StaffRepository staffRepo) {
 		return (args) -> {
 			// save a couple of staff
-			Optional<Staff> opt = staffRepo.findOne(7L);
-			Staff staff = opt.get();
-			repository.save(new Animal("Cecil", "Lion", 'M', 
-					LocalDate.of(2013, Month.APRIL, 20), LocalDate.of(2013, Month.APRIL, 20),staff));
+//			Optional<Staff> opt = staffRepo.findOne(13L);
+//			Staff staff = opt.get();
+//			repository.save(new Animal("Kermit", "Frog", 'M', 
+//					LocalDate.of(2013, Month.APRIL, 20), LocalDate.of(2013, Month.APRIL, 20),staff));
 
 
 			// fetch all animals
 			log.info("Animals found with findAll():");
 			log.info("-------------------------------");
-			for (Animal animal : repository.findByNameIgnoreCase("CEcIl")) {
+			for (Animal animal : repository.findBySpiecesIgnoreCase("LiOn")) {
 				log.info(animal.toString());
 			}
 			log.info("");
