@@ -1,6 +1,7 @@
 package com.zoo.domain;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class Division {
 	private String name;
 	
 	@OneToMany(mappedBy="division")
-	private List<Staff> staffList;
+	private Set<Staff> staffList = new HashSet<>();
 	
 	protected Division(){}
 

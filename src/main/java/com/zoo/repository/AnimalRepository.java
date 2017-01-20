@@ -1,10 +1,14 @@
 package com.zoo.repository;
 
-import java.util.List;
+import java.util.Set;
+
 import com.zoo.domain.Animal;
+import com.zoo.domain.Staff;
 
 public interface AnimalRepository extends BaseRepository<Animal, Long> {
 	
-	public List<Animal> findBySpiecesIgnoreCase(String spiece);
+	public Set<Animal> findBySpiecesIgnoreCase(String spiece);
+	
+	public Set<Animal> findByResponsiblePerson(Staff responsiblePerson);
 
 }

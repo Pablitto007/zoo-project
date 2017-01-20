@@ -1,8 +1,8 @@
 package com.zoo.repository;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
@@ -12,7 +12,7 @@ public interface BaseRepository <T, ID extends Serializable>  extends Repository
 	
 	void delete(T toDelete);
 	 
-	List<T> findAll();
+	Set<T> findAll();
      
     Optional<T> findOne(ID id);
  

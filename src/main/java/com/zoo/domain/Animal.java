@@ -1,6 +1,8 @@
 package com.zoo.domain;
 
 import java.time.LocalDate;
+import java.util.Objects;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +23,11 @@ public class Animal {
 	@Id
 	@SequenceGenerator(name="animalSeqGen",  sequenceName="SEQ_ANIMALS")//from RDBMS
 	@GeneratedValue(generator="animalSeqGen")
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "UUID_number")
+	private UUID uuid = UUID.randomUUID();
 	
 	@Column(nullable=false)
 	private String name;
@@ -44,22 +50,41 @@ public class Animal {
 	protected Animal(){}
 
 	public Animal(String name, String spieces, char gender,
-			LocalDate birthDate, LocalDate arrivalDate, 
-	Staff responsiblePerson) 
+			LocalDate birthDate, LocalDate arrivalDate) 
+	 
 	{
 		this.name = name;
 		this.spieces = spieces;
 		this.gender = gender;
 		this.birthDate = birthDate;
 		this.arrivalDate = arrivalDate;
-		this.responsiblePerson = responsiblePerson;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(uuid);	
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || !(obj instanceof Animal))
+			return false;
+		Animal other = (Animal) obj;
+		return Objects.equals(this.getUuid(), other.getUuid());
 	}
 	
 	@Override
 	public String toString() {
-		return "Animal [id=" + id + ", name=" + name + ", spieces=" + spieces + ", gender=" + gender 
-				+  ", birthDate=" + birthDate + ", arrivalDate=" + arrivalDate
-				+ ", responsiblePerson=" + responsiblePerson + "]";
+		return "Animal [id=" + id + ", uuid=" + uuid + ", name=" + name + ", spieces=" + spieces + ", gender=" + gender
+				+ ", birthDate=" + birthDate + ", arrivalDate=" + arrivalDate + ", responsiblePerson="
+				+ responsiblePerson + "]";
+	}
+
+	public void setResponsiblePerson(Staff responsiblePerson) {
+		responsiblePerson.getAnimals().add(this);
+		this.responsiblePerson = responsiblePerson;
 	}
 
 	public Long getId() {
@@ -78,7 +103,6 @@ public class Animal {
 		return gender;
 	}
 
-
 	public LocalDate getBirthDate() {
 		return birthDate;
 	}
@@ -87,9 +111,6 @@ public class Animal {
 		return arrivalDate;
 	}
 
-	public Staff getResponsiblePersonID() {
-		return responsiblePerson;
-	}
 
 	public void setId(Long id) {
 		this.id = id;
@@ -116,8 +137,14 @@ public class Animal {
 		this.arrivalDate = arrivalDate;
 	}
 
-	public void setResponsiblePersonID(Staff responsiblePerson) {
-		this.responsiblePerson = responsiblePerson;
-	}	
+	public UUID getUuid() {
+		return uuid;
+	}
+
+	public Staff getResponsiblePerson() {
+		return responsiblePerson;
+	}
+	
+	
 	
 }
