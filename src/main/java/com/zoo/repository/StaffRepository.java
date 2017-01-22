@@ -7,5 +7,7 @@ import com.zoo.domain.Staff;
 public interface StaffRepository extends BaseRepository<Staff, Long> {
 	
 	Set<Staff> findBySupervisor(Staff supervisor);
+	
+	Set<Staff> findBySpecializationIgnoreCase(String specialization);
 
 }

@@ -3,6 +3,7 @@ package com.zoo.domain;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 /**
  * 
  * @author Paweł (Pablitto007)
@@ -24,11 +28,12 @@ public class Staff {
 
 	@Id
 	@SequenceGenerator(name = "staffSeqGen", sequenceName = "SEQ_STAFF") // from
+																			// //
 																			// RDBMS
 	@GeneratedValue(generator = "staffSeqGen")
 	private Long id;
 
-	@Column(name = "UUID_number", nullable = false)
+	@Column(name = "UUID_number", nullable = false) // , unique = true)
 	private UUID uuid = UUID.randomUUID();
 
 	private String name;
@@ -39,7 +44,8 @@ public class Staff {
 	@JoinColumn(name = "supervisor_id")
 	private Staff supervisor;
 
-	@OneToMany(mappedBy = "supervisor", cascade = CascadeType.PERSIST)
+	@LazyCollection(LazyCollectionOption.TRUE)
+	@OneToMany(mappedBy = "supervisor", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Staff> inferiors = new HashSet<>();
 
 	private String specialization;
@@ -48,21 +54,21 @@ public class Staff {
 	@JoinColumn(name = "division_id")
 	private Division division;
 
-	@OneToMany(mappedBy = "responsiblePerson")
+	@LazyCollection(LazyCollectionOption.TRUE)
+	@OneToMany(mappedBy = "responsiblePerson", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Animal> animals = new HashSet<>();
 
 	protected Staff() {
 	}
 
-	public Staff(String name, String surname, char gender, Staff supervisor, String specialization) // Division
-																									// divisionID)
+	public Staff(String name, String surname, char gender, Staff supervisor, String specialization)
+
 	{
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
 		this.supervisor = supervisor;
 		this.specialization = specialization;
-		// this.division = divisionID;
 	}
 
 	@Override
@@ -88,10 +94,24 @@ public class Staff {
 				+ ", division=" + division + ", animalList=" + animals + "]";
 	}
 
-	public void setAnimals(Animal animal) {
-//		for (Animal animal : animals) {
-			this.animals.add(animal);
-//		}
+	public void addAnimal(Animal animal) {
+		animal.setResponsiblePerson(this);
+		this.animals.add(animal);
+	}
+	
+	public void addInferior(Staff inferior){
+		inferior.setSupervisor(this);
+		this.inferiors.add(inferior);
+	}
+
+	public void onDelete() {
+		animals.forEach(e -> e.setResponsiblePerson(null));
+		inferiors.forEach(i -> i.setSupervisor(null));
+		this.animals.removeAll(animals);
+	}
+
+	public void setDivision(Division division) {
+		this.division = division;
 	}
 
 	public Long getId() {
@@ -118,10 +138,6 @@ public class Staff {
 		return specialization;
 	}
 
-	public Division getDivisionID() {
-		return division;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -146,10 +162,6 @@ public class Staff {
 		this.specialization = specialization;
 	}
 
-	public void setDivisionID(Division divisionID) {
-		this.division = divisionID;
-	}
-
 	public Staff getSupervisor() {
 		return supervisor;
 	}
@@ -160,10 +172,6 @@ public class Staff {
 
 	public Division getDivision() {
 		return division;
-	}
-
-	public void setDivision(Division division) {
-		this.division = division;
 	}
 
 	public Set<Animal> getAnimals() {

@@ -12,8 +12,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.zoo.domain.Animal;
+import com.zoo.domain.Division;
 import com.zoo.domain.Staff;
 import com.zoo.repository.AnimalRepository;
+import com.zoo.repository.DivisionRepository;
 import com.zoo.repository.StaffRepository;
 
 
@@ -26,29 +28,34 @@ public class ZooProjectApplication {
 		SpringApplication.run(ZooProjectApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner demo(AnimalRepository repository, StaffRepository staffRepo) {
+	public CommandLineRunner demo(DivisionRepository divisionRepository, 
+			AnimalRepository animalRepository, StaffRepository staffRepository) {
 		return (args) -> {
 			// save a couple of staff
-//			Optional<Staff> opt = staffRepo.findOne(13L);
-//			Staff staff = opt.get();
-//			repository.save(new Animal("Kermit", "Frog", 'M', 
-//					LocalDate.of(2013, Month.APRIL, 20), LocalDate.of(2013, Month.APRIL, 20),staff));
-
+//			Division mammals =new Division("MAMMALS");
+//			Animal lion = new Animal("Anatol" , "lion", 'M', 
+//					LocalDate.of(2013, Month.JANUARY, 1), LocalDate.of(2015, Month.JANUARY, 1));
+//			Staff Al = new Staff("Santa" , "Abranow" , 'f', null, "Mammals");
+//
+//			
+//			divisionRepository.save(mammals);
+//			Al.setDivision(mammals);
+//			Al.addAnimal(lion);
 
 			// fetch all animals
-			log.info("Animals found with findAll():");
-			log.info("-------------------------------");
-			for (Animal animal : repository.findBySpiecesIgnoreCase("LiOn")) {
-				log.info(animal.toString());
-			}
-			log.info("");
+//			log.info("Animals found with findAll():");
+//			log.info("-------------------------------");
+//			for (Animal animal : animalRepository.findBySpiecesIgnoreCase("LiOn")) {
+//				log.info(animal.toString());
+//			}
+//			log.info("");
 
 			// fetch an individual customer by ID
-//			Optional<Animal> optional = repository.findOne(1L);
+//			Optional<Staff> optional =staffRepository.findOne(17L);
 //			log.info("Customer found with findOne(1L):");
 //			log.info("--------------------------------");
-//			log.info(optional.get().toString());
-			log.info("");
+//			System.out.println(optional.get().equals(Al));
+//			log.info("");
 
 			
 			log.info("");

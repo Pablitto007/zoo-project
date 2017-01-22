@@ -2,7 +2,10 @@ package com.zoo.domain;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,15 +26,33 @@ public class Division {
 	@GeneratedValue(generator="divisionSeqGen")
 	private Integer id;
 	
+	@Column(name = "UUID_number")
+	private UUID uuid = UUID.randomUUID();
+	
 	private String name;
 	
-	@OneToMany(mappedBy="division")
-	private Set<Staff> staffList = new HashSet<>();
+	@OneToMany(mappedBy="division", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Set<Staff> staffSet = new HashSet<>();
 	
 	protected Division(){}
+	
 
 	public Division(String name) {
 		this.name = name;
+	}
+	
+	public void addStaff (Staff staff){
+			staff.setDivision(this);
+			staffSet.add(staff);
+	}
+	
+	public void onDelete(){
+		staffSet.forEach(e -> e.setDivision(null));
+		this.staffSet.removeAll(staffSet);
+	}
+	
+	public Set<Staff> getStaffSet() {
+		return staffSet;
 	}
 
 	public Integer getId() {
@@ -49,6 +70,8 @@ public class Division {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
+	public UUID getUuid() {
+		return uuid;
+	}
 }

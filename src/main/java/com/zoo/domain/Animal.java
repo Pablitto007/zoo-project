@@ -23,7 +23,6 @@ public class Animal {
 	@Id
 	@SequenceGenerator(name="animalSeqGen",  sequenceName="SEQ_ANIMALS")//from RDBMS
 	@GeneratedValue(generator="animalSeqGen")
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name = "UUID_number")
@@ -83,7 +82,7 @@ public class Animal {
 	}
 
 	public void setResponsiblePerson(Staff responsiblePerson) {
-		responsiblePerson.getAnimals().add(this);
+//		responsiblePerson.getAnimals().add(this);
 		this.responsiblePerson = responsiblePerson;
 	}
 
@@ -137,14 +136,12 @@ public class Animal {
 		this.arrivalDate = arrivalDate;
 	}
 
+
 	public UUID getUuid() {
 		return uuid;
 	}
 
 	public Staff getResponsiblePerson() {
 		return responsiblePerson;
-	}
-	
-	
-	
+	}	
 }
