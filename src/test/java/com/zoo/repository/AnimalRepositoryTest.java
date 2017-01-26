@@ -83,31 +83,19 @@ public class AnimalRepositoryTest {
 	@Before
 		public void populateDB(){
 		//1
-//		Division mammals =new Division("MAMMALS");
 		Staff Al = new Staff("Al" , "Abranow" , 'f', null, "Mammals");
 		Animal Anatol = new Animal("Anatol" , "lion", 'M', 
 				LocalDate.of(2013, Month.JANUARY, 1), LocalDate.of(2015, Month.JANUARY, 1));
 		Animal Opera = new Animal("Opera" , "lion", 'F', 
 				LocalDate.of(2008, Month.NOVEMBER, 11), null);
-//		divisionRepository.save(mammals);
-//		Al.setDivision(mammals);
 		Al.addAnimal(Anatol);
 		Al.addAnimal(Opera);
-		staffRepository.save(Al);
-		
+		staffRepository.save(Al);	
 		//2
-//		Division reptiles = new Division("REPTILES");
 		Animal turtle = new Animal("Donald" , "turtle", 'M', 
 			LocalDate.of(2010, Month.JANUARY, 1), LocalDate.of(2010, Month.JANUARY, 1));
 		Staff Cezar = new Staff("Cezar" , "Cejrus" , 'M', null, "Reptiles");
-		
-
-//		divisionRepository.save(reptiles);
-//		reptiles.addStaff(Cezar);
-//		Cezar.setDivision(reptiles);
 		Cezar.addAnimal(turtle);
 		staffRepository.save(Cezar);
-
 	}
-
 }

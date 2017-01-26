@@ -14,7 +14,6 @@ import com.zoo.domain.Staff;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-// @Sql({ "classpath:test/schema.sql", "classpath:test/data.sql" })
 @Transactional
 public class StaffRepositoryTest {
 
