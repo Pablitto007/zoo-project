@@ -82,8 +82,11 @@ public class Animal {
 	}
 
 	public void setResponsiblePerson(Staff responsiblePerson) {
-//		responsiblePerson.getAnimals().add(this);
 		this.responsiblePerson = responsiblePerson;
+	}
+	
+	public void onDelete(){
+		this.getResponsiblePerson().getAnimals().remove(this);
 	}
 
 	public Long getId() {

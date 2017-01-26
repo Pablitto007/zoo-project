@@ -3,12 +3,12 @@ package com.zoo.domain;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -27,13 +27,11 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Staff {
 
 	@Id
-	@SequenceGenerator(name = "staffSeqGen", sequenceName = "SEQ_STAFF") // from
-																			// //
-																			// RDBMS
+	@SequenceGenerator(name = "staffSeqGen", sequenceName = "SEQ_STAFF") // from DBMS																		
 	@GeneratedValue(generator = "staffSeqGen")
 	private Long id;
 
-	@Column(name = "UUID_number", nullable = false) // , unique = true)
+	@Column(name = "UUID_number", nullable = false) 
 	private UUID uuid = UUID.randomUUID();
 
 	private String name;
@@ -44,8 +42,7 @@ public class Staff {
 	@JoinColumn(name = "supervisor_id")
 	private Staff supervisor;
 
-	@LazyCollection(LazyCollectionOption.TRUE)
-	@OneToMany(mappedBy = "supervisor", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(mappedBy = "supervisor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Staff> inferiors = new HashSet<>();
 
 	private String specialization;
@@ -54,8 +51,7 @@ public class Staff {
 	@JoinColumn(name = "division_id")
 	private Division division;
 
-	@LazyCollection(LazyCollectionOption.TRUE)
-	@OneToMany(mappedBy = "responsiblePerson", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(mappedBy = "responsiblePerson", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Animal> animals = new HashSet<>();
 
 	protected Staff() {
@@ -74,7 +70,6 @@ public class Staff {
 	@Override
 	public int hashCode() {
 		return Objects.hash(uuid);
-
 	}
 
 	@Override
@@ -90,8 +85,8 @@ public class Staff {
 	@Override
 	public String toString() {
 		return "Staff [id=" + id + ", uuid=" + uuid + ", name=" + name + ", surname=" + surname + ", gender=" + gender
-				+ ", supervisor=" + supervisor + ", inferiors=" + inferiors + ", specialization=" + specialization
-				+ ", division=" + division + ", animalList=" + animals + "]";
+				+ ", supervisor=" + supervisor + ", specialization=" + specialization
+				+ ", division=" + division + "]";
 	}
 
 	public void addAnimal(Animal animal) {
@@ -107,7 +102,6 @@ public class Staff {
 	public void onDelete() {
 		animals.forEach(e -> e.setResponsiblePerson(null));
 		inferiors.forEach(i -> i.setSupervisor(null));
-		this.animals.removeAll(animals);
 	}
 
 	public void setDivision(Division division) {
