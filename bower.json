@@ -1,0 +1,22 @@
+{
+  "name": "zoo-project bower file",
+  "authors": [
+    "Paweł Pigłowski <pawkonik@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/main/resources/static/bower_components"
+  ],
+  "dependencies": {
+    "angular": "angularjs#^1.6.2",
+    "bootstrap": "^3.3.7",
+    "angular-smart-table": "^2.1.8"
+  }
+}
