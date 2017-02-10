@@ -30,7 +30,7 @@ public class StaffRepositoryTest {
 	public void staffRelationshipTest(){
 		assertEquals(staffRepository.count(), 3L);
 		
-		Set<Division> divisions = divisionRepository.findByName("REPTILES");
+		Set<Division> divisions = divisionRepository.findByNameIgnoreCase("REPTILES");
 		Division divisionFromDB = divisions.iterator().next();
 		
 		Set<Staff> staffSet = staffRepository.findBySpecializationIgnoreCase("rEPTILEs");

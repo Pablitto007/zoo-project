@@ -20,6 +20,6 @@ public interface BaseRepository <T, ID extends Serializable>  extends Repository
     
     long count();
     
-    Set<T> findByName(String name);
+    Set<T> findByNameIgnoreCase(String name);
 
 }

@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * 
  * @author Paweł (Pablitto007)
@@ -33,6 +35,7 @@ public class Division {
 	
 	private String name;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="division", fetch = FetchType.LAZY,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Staff> staffSet = new HashSet<>();
 	

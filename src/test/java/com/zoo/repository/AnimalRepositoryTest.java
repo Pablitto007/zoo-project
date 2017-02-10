@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,13 +74,21 @@ public class AnimalRepositoryTest {
 	
 	@Test
 	public void findByResponsiblePersonTest(){
-		Staff staff = staffRepository.findOne(2L).get(); //2		
+		Staff staff = staffRepository.findByNameIgnoreCase("Cezar").iterator().next(); 	//only one Cezar
 		Set<Animal> animals = animalRepository.findByResponsiblePerson(staff);
 		assertTrue(animals.size() == 1);
 		Animal animalFromDB = animals.iterator().next();
 		assertEquals(animalFromDB.getBirthDate(), LocalDate.of(2010, Month.JANUARY, 1));
-	
+		assertEquals(animalFromDB.getName(), "Donald");
 	}
+	
+	@Test
+	public void findByBirthYearTest(){
+		Set<Animal> bornIn2008 = animalRepository.findByBirthYear("2008");
+		assertEquals(bornIn2008.size(), 1);
+		assertEquals(bornIn2008.iterator().next().getName(), "Opera");
+	}
+	
 	@Before
 		public void populateDB(){
 		//1

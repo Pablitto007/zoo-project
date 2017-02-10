@@ -19,6 +19,8 @@ import javax.persistence.SequenceGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * 
  * @author Paweł (Pablitto007)
@@ -42,15 +44,18 @@ public class Staff {
 	@JoinColumn(name = "supervisor_id")
 	private Staff supervisor;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "supervisor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Staff> inferiors = new HashSet<>();
 
 	private String specialization;
+	
 
 	@ManyToOne
 	@JoinColumn(name = "division_id")
 	private Division division;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "responsiblePerson", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Animal> animals = new HashSet<>();
 
