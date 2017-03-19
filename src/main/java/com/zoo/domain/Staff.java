@@ -16,10 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * 
@@ -32,30 +31,36 @@ public class Staff {
 	@SequenceGenerator(name = "staffSeqGen", sequenceName = "SEQ_STAFF") // from DBMS																		
 	@GeneratedValue(generator = "staffSeqGen")
 	private Long id;
-
-	@Column(name = "UUID_number", nullable = false) 
+	
+	@JsonIgnore
+	@Column(name = "uuid", nullable = false)
 	private UUID uuid = UUID.randomUUID();
 
 	private String name;
 	private String surname;
 	private char gender;
-
-	@ManyToOne
-	@JoinColumn(name = "supervisor_id")
-	private Staff supervisor;
-
+	
 	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "supervisor_id")
+//	@JsonBackReference
+	private Staff supervisor;
+	
+	@JsonIgnore
+//	@JsonManagedReference
 	@OneToMany(mappedBy = "supervisor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Staff> inferiors = new HashSet<>();
 
 	private String specialization;
 	
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "division_id")
+	@JsonBackReference //to avoid Infinite Recursion with Jackson 
 	private Division division;
 
-	@JsonIgnore
+
+	@JsonManagedReference //to avoid Infinite Recursion with Jackson 
 	@OneToMany(mappedBy = "responsiblePerson", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Animal> animals = new HashSet<>();
 
@@ -81,7 +86,7 @@ public class Staff {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null || !(obj instanceof Staff))
+		if (obj == null || this.getClass() != (obj.getClass()))
 			return false;
 		Staff other = (Staff) obj;
 		return Objects.equals(this.getUuid(), other.getUuid());
@@ -90,13 +95,14 @@ public class Staff {
 	@Override
 	public String toString() {
 		return "Staff [id=" + id + ", uuid=" + uuid + ", name=" + name + ", surname=" + surname + ", gender=" + gender
-				+ ", supervisor=" + supervisor + ", specialization=" + specialization
-				+ ", division=" + division + "]";
+				+ ", supervisor=" + supervisor + ", specialization=" + specialization + "]";
 	}
 
-	public void addAnimal(Animal animal) {
+	public void addAnimal(Animal...animals) {
+		for (Animal animal : animals){
 		animal.setResponsiblePerson(this);
 		this.animals.add(animal);
+		}
 	}
 	
 	public void addInferior(Staff inferior){
@@ -107,6 +113,10 @@ public class Staff {
 	public void onDelete() {
 		animals.forEach(e -> e.setResponsiblePerson(null));
 		inferiors.forEach(i -> i.setSupervisor(null));
+	}
+	
+	public void removeAnimal(Animal animal){
+		animals.remove(animal);
 	}
 
 	public void setDivision(Division division) {

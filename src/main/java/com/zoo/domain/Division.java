@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * 
@@ -30,12 +31,14 @@ public class Division {
 	@GeneratedValue(generator="divisionSeqGen")
 	private Integer id;
 	
-	@Column(name = "UUID_number")
+	@JsonIgnore
+	@Column(name = "uuid", nullable = false)
 	private UUID uuid = UUID.randomUUID();
 	
 	private String name;
 	
-	@JsonIgnore
+//	@JsonIgnore
+	@JsonManagedReference //to avoid Infinite Recursion with Jackson 
 	@OneToMany(mappedBy="division", fetch = FetchType.LAZY,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Staff> staffSet = new HashSet<>();
 	
@@ -66,8 +69,8 @@ public class Division {
 	}
 
 	public void addStaff (Staff staff){
+			getStaffSet().add(staff);
 			staff.setDivision(this);
-			staffSet.add(staff);
 	}
 	
 	public void onDelete(){

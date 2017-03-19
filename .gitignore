@@ -1,14 +1,8 @@
-maven-wrapper.jar
-
-
-### STS ###
-
-.apt_generated
+# Eclipse
 .classpath
-.factorypath
 .project
-.settings
-.springBeans
+.settings/
 
-
-bower_components/*
+# Maven
+log/
+target/

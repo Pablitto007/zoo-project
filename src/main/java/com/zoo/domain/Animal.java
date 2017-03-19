@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
@@ -28,7 +30,8 @@ public class Animal {
 	@GeneratedValue(generator="animalSeqGen")
 	private Long id;
 	
-	@Column(name = "UUID_number")
+	@JsonIgnore
+	@Column(name = "uuid", nullable = false)
 	private UUID uuid = UUID.randomUUID();
 	
 	@Column(nullable=false)
@@ -46,12 +49,19 @@ public class Animal {
 	@Column(name="arrival_date")
 	LocalDate arrivalDate;
 	
-	@ManyToOne
+	@ManyToOne(fetch =FetchType.LAZY)
 	@JoinColumn(name="responsible_person_id")
+	@JsonBackReference //to avoid Infinite Recursion with Jackson 
 	private Staff responsiblePerson;
 	
 	
 	protected Animal(){}
+	
+	public Animal(String name, String spieces, char gender,
+			LocalDate birthDate, LocalDate arrivalDate, Staff responsiblePerson) {
+		this(name, spieces, gender, birthDate, arrivalDate);
+		this.responsiblePerson = responsiblePerson;
+	}
 
 	public Animal(String name, String spieces, char gender,
 			LocalDate birthDate, LocalDate arrivalDate) 
@@ -73,7 +83,7 @@ public class Animal {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null || !(obj instanceof Animal))
+		if (obj == null || this.getClass() != (obj.getClass()))
 			return false;
 		Animal other = (Animal) obj;
 		return Objects.equals(this.getUuid(), other.getUuid());
@@ -82,8 +92,7 @@ public class Animal {
 	@Override
 	public String toString() {
 		return "Animal [id=" + id + ", uuid=" + uuid + ", name=" + name + ", spieces=" + spieces + ", gender=" + gender
-				+ ", birthDate=" + birthDate + ", arrivalDate=" + arrivalDate + ", responsiblePerson="
-				+ responsiblePerson + "]";
+				+ ", birthDate=" + birthDate + ", arrivalDate=" + arrivalDate + "]";
 	}
 
 	public void setResponsiblePerson(Staff responsiblePerson) {
