@@ -1,0 +1,19 @@
+#body { 
+#padding-top: 70px; 
+#}
+#.navbar{
+#background-color: green;
+#}
+
+
+
+md-sidenav, 
+#md-sidenav.md-sidenav-left,
+#md-sidenav.md-locked-open, 
+#md-sidenav.md-closed.md-locked-open-add-active {
+    min-width: 300px !important;
+    width: 85vw !important;
+    max-width: 500px !important;
+    margin:-50px 0 0 0;
+    padding-top: 50px !important;
+} 

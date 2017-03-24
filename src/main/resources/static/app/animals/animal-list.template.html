@@ -1,0 +1,106 @@
+<md-content class="md-margin" md-theme='light-green'>
+
+    <div class="container">
+        <table class="table table-striped">
+
+            <tr>
+                <th>lp</th>
+                <th>name</th>
+                <th>spiece</th>
+                <th>birth date</th>
+                <th>arrival date</th>
+                <th>gender</th>
+                <th>delete</th>
+            </tr>
+
+            <tr>
+                <th colspan="12">
+                    <input ng-model="query" placeholder="Search" class="form-control">
+                </th>
+            </tr>
+
+            <tr ng-repeat="animal in animals | filter:query">
+                <td>{{$index +1}}</td>
+                <td>{{animal.name}}</td>
+                <td>{{animal.spieces}}</td>
+                <td>{{animal.birthDate}}</td>
+                <td>{{animal.arrivalDate}}</td>
+                <td>{{animal.gender}}</td>
+                <td>
+                    <button type="button" ng-click="showConfirm(animal.id)" class="btn btn-sm btn-danger">
+                        <i class="glyphicon glyphicon-remove-circle"> </i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+            </tr>
+        </table>
+        <md-button ng-click="toggleLeft()" class="md-raised md-primary">+Add Animal</md-button>
+        </button>
+    </div>
+
+</md-content>
+
+<!-- Side nav form -->
+<div ng-cloak>
+
+    <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4" md-theme='light-green'>
+
+        <md-toolbar>
+            <h1 class="md-toolbar-tools">Add new animal</h1>
+        </md-toolbar>
+        <md-content layout-padding>
+            <div>
+                <form name="animalForm">
+                    <md-input-container class="md-block">
+                        <label>Name</label>
+                        <input ng-model="animal.name"> </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <label>Species</label>
+                        <input ng-model="animal.spieces"> </md-input-container>
+
+                    <md-radio-group ng-model="animal.gender">
+                        <md-radio-button value="F" class="md-primary">Female</md-radio-button>
+                        <md-radio-button value="M" class="md-primary">Male</md-radio-button>
+                    </md-radio-group>
+
+                    <div layout-margin layout="row">
+                        <label style="min-width: 180px;">Birth Date:</label>
+                        <md-datepicker ng-model="picker.birthDate" md-placeholder="Birth date" md-min-date="minDate" md-max-date="maxDate"> </md-datepicker>
+                    </div>
+
+                    <div layout-margin layout="row">
+                        <label style="min-width: 180px;">Arrival Date:</label>
+                        <md-datepicker ng-model="picker.arrivalDate" md-placeholder="Arrival date" md-min-date="minDate" md-max-date="maxDate"> </md-datepicker>
+                    </div>
+                    <div>
+                        <md-autocomplete ng-model="selectedItem" md-no-cache="true" md-selected-item="selectedItem" md-search-text="searchText" md-items="s in staff" md-item-text="s.name" md-min-length="0" placeholder="Pick Responsible Person">
+
+                            <md-item-template>
+                                <span>
+									<strong>{{s.name}}</strong> 
+								</span>
+                                <span>
+									<strong>{{s.surname}}</strong> 
+								</span>
+                            </md-item-template>
+                        </md-autocomplete>
+                    </div>
+
+                    <div layout="row" layout-margin>
+                        <div flex="50">
+                            <md-button input type="submit" ng-click="addAnimal(animal)" class="md-raised md-primary">Add animal</md-button>
+                        </div>
+                        <div flex="50">
+                            <md-button ng-click="toggleLeft()" class="md-accent">
+                                Hide form </md-button>
+                        </div>
+
+                    </div>
+                </form>
+                <!--pre>{{selectedItem.id}}</pre> 
+		<pre>{{animal | json}}</pre-->
+        </md-content>
+    </md-sidenav>
+   </div>
