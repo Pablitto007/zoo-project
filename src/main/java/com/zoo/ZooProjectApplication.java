@@ -17,7 +17,7 @@ import com.zoo.repository.DivisionRepository;
 import com.zoo.repository.StaffRepository;
 
 @SpringBootApplication
-public class ZooProjectApplication //implements CommandLineRunner 
+public class ZooProjectApplication 
 {
 	
 	@Autowired
