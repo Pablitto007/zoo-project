@@ -16,9 +16,13 @@ import com.zoo.repository.DivisionRepository;
 @RequestMapping("/rest/division")
 public class DivisionRestController {
 	
-	@Autowired
-	DivisionRepository divisionRepository;
+	private DivisionRepository divisionRepository;
 	
+	@Autowired
+	public DivisionRestController(DivisionRepository divisionRepository) {
+		this.divisionRepository = divisionRepository;
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	public Set<Division> getAll(){
 		Set<Division> division = divisionRepository.findAll();

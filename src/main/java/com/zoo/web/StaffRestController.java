@@ -16,9 +16,13 @@ import com.zoo.repository.StaffRepository;
 @RequestMapping("/rest/staff")
 public class StaffRestController {
 	
-	@Autowired
-	StaffRepository staffRepository; 
+	private StaffRepository staffRepository; 
 	
+	@Autowired
+	public StaffRestController(StaffRepository staffRepository) {
+		this.staffRepository = staffRepository;
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	public Set<Staff> getAll(){
 		Set<Staff> staff = staffRepository.findAll();
