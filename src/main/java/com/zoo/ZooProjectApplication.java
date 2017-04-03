@@ -26,11 +26,7 @@ public class ZooProjectApplication
 	@Autowired
 	StaffRepository staffRepository;
 	
-	@Autowired
-	DivisionRepository divisionRepository;
 
-//	private static final Logger log = LoggerFactory.getLogger(ZooProjectApplication.class);
-//	
 	@Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {

@@ -3,11 +3,8 @@ package com.zoo.repository;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.zoo.domain.Staff;
 
-@Transactional
 public interface StaffRepository extends BaseRepository<Staff, Long> {
 	
 	/**
