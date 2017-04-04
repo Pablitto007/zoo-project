@@ -35,7 +35,6 @@ public class AnimalRestController {
 		return animals;
 	}
 	
-	@Transactional
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	public void addAnimal(@RequestBody Animal animal, @PathVariable String id) {
 		
@@ -52,8 +51,7 @@ public class AnimalRestController {
 				.orElseThrow(()-> new DataAccessResourceFailureException("Can not find animal id: " + id)) ;
 		return animal;
 	}
-	
-	@Transactional
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable String id) {
 		Animal animal = aniamalRepository.findOne(Long.parseLong(id))
