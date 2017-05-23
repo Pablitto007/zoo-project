@@ -4,12 +4,15 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.zoo.domain.Animal;
 import com.zoo.domain.Staff;
 import com.zoo.repository.AnimalRepository;
@@ -22,6 +25,7 @@ public class AnimalRestController {
 
 	private AnimalRepository aniamalRepository;
 	private StaffRepository staffRepository; 
+	private final int PAGE_SIZE = 5;
 	
 	@Autowired
 	public AnimalRestController(AnimalRepository aniamalRepository, StaffRepository staffRepository) {
@@ -33,6 +37,14 @@ public class AnimalRestController {
 	public Set<Animal> getAllAnimals() {
 		Set<Animal> animals = aniamalRepository.findAll();
 		return animals;
+	}
+	
+	@RequestMapping(value = "/page/{pageNumber}",  method = RequestMethod.GET)
+	public Page<Animal> getPage(@PathVariable String pageNumber){
+		PageRequest request = 
+				new PageRequest((Integer.parseInt(pageNumber) -1), PAGE_SIZE, Sort.Direction.ASC, "name");
+		Page<Animal> page = aniamalRepository.findAll(request);
+		return page;
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 
@@ -13,6 +15,8 @@ public interface BaseRepository <T, ID extends Serializable>  extends Repository
 	void delete(T toDelete);
 	 
 	Set<T> findAll();
+	
+	Page<T> findAll(Pageable pageRequest);
      
     Optional<T> findOne(ID id);
  
@@ -21,5 +25,6 @@ public interface BaseRepository <T, ID extends Serializable>  extends Repository
     long count();
     
     Set<T> findByNameIgnoreCase(String name);
+    
 
 }
