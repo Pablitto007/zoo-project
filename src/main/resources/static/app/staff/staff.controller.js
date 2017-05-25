@@ -3,17 +3,33 @@
         .module('mainModule')
         .controller('staff.controller', ['$scope', 'dataService', '$mdDialog', '$log',
 				function ($scope, dataService, $mdDialog, $log) {
+        		
+        	$scope.currentPage = 1;
+            $scope.staff = [];
+            getStaffPage($scope.currentPage);
+            $scope.OneStaff = {};
 
-                $scope.staff = [];
-                getStaff();
-                $scope.OneStaff = {};
+        	  $scope.paging = {
+        	    total: 10,
+        	    current: 1,
+        	    onPageChanged: loadPages,
+        	  };
+
+            function loadPages() {
+        	   console.log('Current page is : ' + $scope.paging.current);
+
+        	   getStaffPage($scope.paging.current);
+
+        	    $scope.currentPage = $scope.paging.current;
+        	  }
            
-                $scope.cancel = function (name, surname) {
+            $scope.cancel = function (name, surname) {
                     $scope.OneStaff.name = name;
                     $scope.OneStaff.surname = surname;
                     $mdDialog.hide();
-                }
-                $scope.confirm = function(staff){
+              }
+                
+            $scope.confirm = function(staff){
                     dataService.updateStaff(staff)
                         .then(function (response) {
                                 $log.log('updated  staff id ' + staff.id);
@@ -26,7 +42,7 @@
                     
                 }
 
-                function getStaff() {
+            function getStaff() {
                     dataService.getStaff()
                         .then(
                             function (response) {
@@ -37,8 +53,22 @@
                                     .error('error during fetching data ' + error.data);
                             });
                 }
+                    
+            function getStaffPage(pageNumber) {
+                    dataService.getStaffPage(pageNumber)
+                        .then(
+                            function (response) {
+                                $scope.staff = response.data.content;
+                                $scope.paging.total = response.data.totalPages;
+                                
+                            },
+                            function (error) {
+                                $log
+                                    .error('error during fetching data ' + error.data);
+                            });
+                }
 
-                $scope.getOneStaff = function (id) {
+            $scope.getOneStaff = function (id) {
                     dataService.getOneStaff(id)
                         .then(
                             function (response) {
@@ -51,7 +81,7 @@
                 }
 
 
-                $scope.showStaffDetails = function (stf, evt) {
+            $scope.showStaffDetails = function (stf, evt) {
 					
 					$scope.OneStaff = stf;
 					
@@ -68,7 +98,7 @@
 
                         controllerAs: 'ctrl',
                         bindToController: true,
-
+                   
                         template: '<md-dialog aria-label="List dialog" md-theme="light-green">' +
                             '<md-toolbar>' +
                             '<div class="md-toolbar-tools">' +
@@ -89,7 +119,7 @@
                             '<md-divider ></md-divider>'+
                             '<md-list> Animals:' +
                             '<md-list-item ng-repeat="animal in ctrl.stf.animals">' +
-                            '{{animal.name}}' +
+                            '{{animal.name}} ({{animal.spieces}})' +
                             '</md-list-item>' +
                             '</md-list>' +
                             '</md-dialog-content>' +

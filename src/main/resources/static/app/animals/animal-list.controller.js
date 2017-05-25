@@ -2,14 +2,43 @@
     angular.module('mainModule')
         .controller('animal-list.controller', ['$scope', 'dataService', '$mdDialog', '$log', '$mdSidenav', '$filter',
 				function ($scope, dataService, $mdDialog, $log, $mdSidenav, $filter) {
-
+                
+                $scope.currentPage = 1;
                 $scope.animals = [];
                 $scope.staff = [];
-                getAnimals();
+                getAnimalsPage($scope.currentPage);
                 getStaff();
 
                 $scope.selected = [];
+                
+                $scope.paging = {
+        	    total: 10,
+        	    current: 1,
+        	    onPageChanged: loadPages,
+        	    };
 
+            function loadPages() {
+        	   console.log('Current page is : ' + $scope.paging.current);
+
+        	   getAnimalsPage($scope.paging.current);
+
+        	    $scope.currentPage = $scope.paging.current;
+        	    } 
+                    
+            function getAnimalsPage(pageNumber) {
+                dataService.getAnimalsPage(pageNumber)
+                    .then(
+                            function (response) {
+                                $scope.animals = response.data.content;
+                                $scope.paging.total = response.data.totalPages;
+                                
+                            },
+                            function (error) {
+                                $log
+                                    .error('error during fetching data ' + error.data);
+                    });
+                }
+                
                 function getAnimals() {
                     dataService.getAnimals()
                         .then(

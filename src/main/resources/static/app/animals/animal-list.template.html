@@ -35,16 +35,21 @@
             <tr>
             </tr>
         </table>
+        <section layout="row" layout-padding="">
+	       <cl-paging flex cl-pages="paging.total" , cl-steps="3" , 
+            cl-page-changed="paging.onPageChanged()" , cl-align="center center" , cl-current-page="paging.current">
+            </cl-paging>
+        </section>
         <md-button ng-click="toggleLeft()" class="md-raised md-primary">+Add Animal</md-button>
         </button>
     </div>
-
 </md-content>
 
 <!-- Side nav form -->
 <div ng-cloak>
 
-    <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4" md-theme='light-green'>
+    <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4" 
+        md-theme='light-green'>
 
         <md-toolbar>
             <h1 class="md-toolbar-tools">Add new animal</h1>

@@ -2,20 +2,20 @@
 
 (function () {
 
-var app = angular.module('mainModule', ['ngMaterial', 'ngRoute']);
+var app = angular.module('mainModule', ['ngMaterial', 'ngRoute', 'cl.paging']);
 
 app.config(['$routeProvider' , '$locationProvider', '$mdThemingProvider', 
             function ($routeProvider, $locationProvider, $mdThemingProvider) {
 	
-	$mdThemingProvider.theme('docs-dark', 'default')
-    .primaryPalette('green')
+	$mdThemingProvider.theme('docs-dark')
     .warnPalette('red')
     .accentPalette('green')
     .dark();
+    
+    $mdThemingProvider.setDefaultTheme('docs-dark');
 	
-	$mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
     $mdThemingProvider.theme('light-green').primaryPalette('green');
-    $mdThemingProvider.theme('dark-green').backgroundPalette('teal').dark();         
+       
 	
 	$locationProvider.html5Mode(true);
 	$routeProvider

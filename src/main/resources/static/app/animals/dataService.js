@@ -13,11 +13,25 @@ angular
     		url: urlAnimalTemplate 
     	});
     };
+        
+    dataService.getAnimalsPage = function(pageNumber) {
+        return $http({
+    		method: 'GET',
+    		url: urlAnimalTemplate +'page/' + pageNumber
+    	});
+    };
     
     dataService.getStaff = function() {
         return $http({
     		method: 'GET',
     		url: urlStaffTemplate 
+    	});
+    };
+        
+    dataService.getStaffPage = function(pageNumber) {
+        return $http({
+    		method: 'GET',
+    		url: urlStaffTemplate +'page/' + pageNumber
     	});
     };
     

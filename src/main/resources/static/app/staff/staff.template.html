@@ -1,4 +1,5 @@
-<md-content class="md-padding">
+<md-content md-theme='light-green'>
+<div>
      <md-list flex>
         <!-- md-subheader class="md-no-sticky">Our staff</md-subheader-->
         <md-list-item class="md-3-line" ng-repeat="stf in staff" ng-click="null" class="secondary-button-padding">
@@ -12,4 +13,12 @@
           <md-divider ></md-divider>
         </md-list-item>
         </md-list>
+
+</div>
+<section layout="row" layout-padding="">
+	<cl-paging flex cl-pages="paging.total" , cl-steps="3" , 
+      cl-page-changed="paging.onPageChanged()" , cl-align="center center" , cl-current-page="paging.current">
+    </cl-paging>
+</section>
+
 </md-content>
