@@ -21,4 +21,4 @@ Two ways to run program:
 
 Thanks!
 
-![animals](https://cloud.githubusercontent.com/assets/15158633/24582233/58204c60-172b-11e7-91a6-d8997331f383.png)
+![animals1](https://cloud.githubusercontent.com/assets/15158633/26455517/cbd92a1e-416a-11e7-9109-7c4408bdfefe.jpg)
