@@ -8,6 +8,7 @@ app.config(['$routeProvider' , '$locationProvider', '$mdThemingProvider',
             function ($routeProvider, $locationProvider, $mdThemingProvider) {
 	
 	$mdThemingProvider.theme('docs-dark')
+	.primaryPalette('green')
     .warnPalette('red')
     .accentPalette('green')
     .dark();
