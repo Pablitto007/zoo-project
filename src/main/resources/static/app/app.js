@@ -1,6 +1,5 @@
- //script.js  -- main module --
-
 (function () {
+    'use strict';
 
 var app = angular.module('mainModule', ['ngMaterial', 'ngRoute', 'cl.paging']);
 
