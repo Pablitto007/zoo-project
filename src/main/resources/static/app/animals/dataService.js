@@ -1,4 +1,5 @@
 (function (){
+    'use strict';
 angular
     .module('mainModule')
     .factory('dataService', ['$http',  function ($http) {
@@ -57,10 +58,10 @@ angular
     	});
     };
         
-    dataService.updateStaff = function(staff){
+    dataService.updateStaff = function(staff, id){
     	return $http({
     		method: 'PUT',
-    		url: urlStaffTemplate , 
+    		url: urlStaffTemplate +id,
     		data: staff
     	});
     };

@@ -1,4 +1,5 @@
 (function () {
+    'use strict';
     angular.module('mainModule')
         .controller('animal-list.controller', ['$scope', 'dataService', '$mdDialog', '$log', '$mdSidenav', '$filter',
 				function ($scope, dataService, $mdDialog, $log, $mdSidenav, $filter) {
@@ -6,7 +7,6 @@
                 $scope.currentPage = 1;
                 $scope.animals = [];
                 $scope.staff = [];
-                getAnimalsPage($scope.currentPage);
                 getStaff();
 
                 $scope.selected = [];

@@ -1,4 +1,5 @@
 (function () {
+    'use strict';
     angular
         .module('mainModule')
         .controller('staff.controller', ['$scope', 'dataService', '$mdDialog', '$log',
@@ -30,7 +31,7 @@
               }
                 
             $scope.confirm = function(staff){
-                    dataService.updateStaff(staff)
+                    dataService.updateStaff(staff, staff.id)
                         .then(function (response) {
                                 $log.log('updated  staff id ' + staff.id);
                                 $mdDialog.hide();
