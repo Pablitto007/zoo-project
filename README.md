@@ -18,6 +18,8 @@ Two ways to run program:
     * Import maven project into your IDE
     * Run ApplicationStarter
     * Type localhost:8080 in your broswer or use any Rest Client
+    
+ API is documented via Swagger, you may check it on localhost:8080/swagger-ui.html#
 
 Thanks!
 
