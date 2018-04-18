@@ -2,46 +2,49 @@
 <html ng-app="mainModule" lang="pl-PL">
 
 <head>
-<title>Zoo-project</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet"
-	href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-<link rel="stylesheet"
-	href="/bower_components/angular-material/angular-material.css" />
-<link rel="stylesheet" type="text/css" href="index.css" />
-<base href="/animals">
+    <title>Zoo-project</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet"
+          href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet"
+          href="/bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+    <base href="/animals">
 </head>
 
 <body>
-	
-	<md-content class="md-padding">
-    <md-nav-bar 
-      md-selected-nav-item="currentNavItem"
-      nav-bar-aria-label="navigation links">
-      
-	  
-      <md-nav-item md-nav-href="animals" name="animals">Animals</md-nav-item>
-      <md-nav-item md-nav-href="staff" name="staff">Staff</md-nav-item>
-      
-	  
+
+<md-content class="md-padding">
+    <md-nav-bar
+            md-selected-nav-item="currentNavItem"
+            nav-bar-aria-label="navigation links">
+
+
+        <md-nav-item md-nav-href="animals" name="animals">Animals</md-nav-item>
+        <md-nav-item md-nav-href="staff" name="staff">Staff</md-nav-item>
+        <md-nav-item md-nav-href="csv" name="csv">CSV</md-nav-item>
+
+
     </md-nav-bar>
-  </md-content>
-	
-		
-		<div ng-view></div>
-	
-		
-	<script src="/bower_components/angular/angular.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.min.js"></script>
-	<script
-		src="/bower_components/angular-animate/angular-animate.min.js"></script>
-	<script src="/bower_components/angular-aria/angular-aria.min.js"></script>
-	<script src="/bower_components/angular-material/angular-material.min.js"></script>
-	<script src="/bower_components/material-angular-paging/build/dist.min.js"></script>
-	<script src="/app/app.js"></script>
-	<script src="/app/animals/dataService.js"></script>
-	<script src="/app/animals/animal-list.controller.js"></script>
-    <script src="/app/staff/staff.controller.js"></script>
+</md-content>
+
+
+<div ng-view></div>
+
+
+<script src="/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.min.js"></script>
+<script
+        src="/bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="/bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="/bower_components/angular-material/angular-material.min.js"></script>
+<script src="/bower_components/material-angular-paging/build/dist.min.js"></script>
+<script src="/app/app.js"></script>
+<script src="/app/animals/dataService.js"></script>
+<script src="/app/animals/animal-list.controller.js"></script>
+<script src="/app/staff/staff.controller.js"></script>
+<script src="/app/reports/csv.controller.js"></script>
 
 </body>
 </html>

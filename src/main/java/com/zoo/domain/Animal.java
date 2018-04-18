@@ -17,148 +17,151 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
- * 
  * @author Paweł (Pablitto007)
  */
 @Entity
-@Table(name="Animals")
+@Table(name = "Animals")
 public class Animal {
 
-	@Id
-	@SequenceGenerator(name="animalSeqGen",  sequenceName="SEQ_ANIMALS")//from RDBMS
-	@GeneratedValue(generator="animalSeqGen")
-	private Long id;
-	
-	@JsonIgnore
-	@Column(name = "uuid", nullable = false)
-	private UUID uuid = UUID.randomUUID();
-	
-	@Column(nullable=false)
-	private String name;
-	@Column(nullable=false)
-	private String spieces;
-	
-	private char gender;
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy") 
-	@Column(name="birth_date", nullable=false)
-	LocalDate birthDate;
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy") 
-	@Column(name="arrival_date")
-	LocalDate arrivalDate;
-	
-	@ManyToOne(fetch =FetchType.LAZY)
-	@JoinColumn(name="responsible_person_id")
-	@JsonBackReference //to avoid Infinite Recursion with Jackson 
-	private Staff responsiblePerson;
-	
-	
-	protected Animal(){}
-	
-	public Animal(String name, String spieces, char gender,
-			LocalDate birthDate, LocalDate arrivalDate, Staff responsiblePerson) {
-		this(name, spieces, gender, birthDate, arrivalDate);
-		this.responsiblePerson = responsiblePerson;
-	}
+    @Id
+    @SequenceGenerator(name = "animalSeqGen", sequenceName = "SEQ_ANIMALS")//from RDBMS
+    @GeneratedValue(generator = "animalSeqGen")
+    private Long id;
 
-	public Animal(String name, String spieces, char gender,
-			LocalDate birthDate, LocalDate arrivalDate) 
-	 
-	{
-		this.name = name;
-		this.spieces = spieces;
-		this.gender = gender;
-		this.birthDate = birthDate;
-		this.arrivalDate = arrivalDate;
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(uuid);	
-	}
+    @JsonIgnore
+    @Column(name = "uuid", nullable = false)
+    private UUID uuid = UUID.randomUUID();
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || this.getClass() != (obj.getClass()))
-			return false;
-		Animal other = (Animal) obj;
-		return Objects.equals(this.getUuid(), other.getUuid());
-	}
-	
-	@Override
-	public String toString() {
-		return "Animal [id=" + id + ", uuid=" + uuid + ", name=" + name + ", spieces=" + spieces + ", gender=" + gender
-				+ ", birthDate=" + birthDate + ", arrivalDate=" + arrivalDate + "]";
-	}
+    @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
+    private String spieces;
 
-	public void setResponsiblePerson(Staff responsiblePerson) {
-		this.responsiblePerson = responsiblePerson;
-	}
-	
-	public void onDelete(){
-		this.getResponsiblePerson().getAnimals().remove(this);
-	}
+    private char gender;
 
-	public Long getId() {
-		return id;
-	}
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @Column(name = "birth_date", nullable = false)
+    LocalDate birthDate;
 
-	public String getName() {
-		return name;
-	}
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @Column(name = "arrival_date")
+    LocalDate arrivalDate;
 
-	public String getSpieces() {
-		return spieces;
-	}
-
-	public char getGender() {
-		return gender;
-	}
-
-	public LocalDate getBirthDate() {
-		return birthDate;
-	}
-
-	public LocalDate getArrivalDate() {
-		return arrivalDate;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "responsible_person_id")
+    @JsonBackReference //to avoid Infinite Recursion with Jackson
+    private Staff responsiblePerson;
 
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    protected Animal() {
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Animal(String name, String spieces, char gender,
+                  LocalDate birthDate, LocalDate arrivalDate, Staff responsiblePerson) {
+        this(name, spieces, gender, birthDate, arrivalDate);
+        this.responsiblePerson = responsiblePerson;
+    }
 
-	public void setSpieces(String spieces) {
-		this.spieces = spieces;
-	}
+    public Animal(String name, String spieces, char gender,
+                  LocalDate birthDate, LocalDate arrivalDate)
 
-	public void setGender(char gender) {
-		this.gender = gender;
-	}
+    {
+        this.name = name;
+        this.spieces = spieces;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.arrivalDate = arrivalDate;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || this.getClass() != (obj.getClass()))
+            return false;
+        Animal other = (Animal) obj;
+        return Objects.equals(this.getUuid(), other.getUuid());
+    }
+
+    @Override
+    public String toString() {
+        /*return "Animal [id=" + id + ", uuid=" + uuid + ", name=" + name + ", spieces=" + spieces + ", gender=" + gender
+				+ ", birthDate=" + birthDate + ", arrivalDate=" + arrivalDate + "]";*/
+        return "id=" + id + ";uuid=" + uuid + ";name=" + name + ";spieces=" + spieces + ";gender=" + gender
+                + ";birthDate=" + birthDate + ";arrivalDate=" + arrivalDate + "\n";
+    }
+
+    public void setResponsiblePerson(Staff responsiblePerson) {
+        this.responsiblePerson = responsiblePerson;
+    }
+
+    public void onDelete() {
+        this.getResponsiblePerson().getAnimals().remove(this);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSpieces() {
+        return spieces;
+    }
+
+    public char getGender() {
+        return gender;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public LocalDate getArrivalDate() {
+        return arrivalDate;
+    }
 
 
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setArrivalDate(LocalDate arrivalDate) {
-		this.arrivalDate = arrivalDate;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSpieces(String spieces) {
+        this.spieces = spieces;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
 
 
-	public UUID getUuid() {
-		return uuid;
-	}
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
 
-	public Staff getResponsiblePerson() {
-		return responsiblePerson;
-	}	
+    public void setArrivalDate(LocalDate arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
+
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public Staff getResponsiblePerson() {
+        return responsiblePerson;
+    }
 }
