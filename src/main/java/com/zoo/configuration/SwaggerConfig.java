@@ -23,14 +23,16 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.any())
                 .paths(Predicates.or(
                         PathSelectors.ant("/rest/animals/**"),
-                        PathSelectors.ant("/rest/staff/**")))
+                        PathSelectors.ant("/rest/staff/**"),
+                        PathSelectors.ant("/csv/animals/**")))
+
                 .build()
                 .pathMapping("/")
                 .apiInfo(apiInfo());
     }
 
     @Bean
-    public ApiInfo apiInfo(){
+    public ApiInfo apiInfo() {
         final ApiInfoBuilder builder = new ApiInfoBuilder();
         builder
                 .title("zoo-project Api").version("1.0.5")

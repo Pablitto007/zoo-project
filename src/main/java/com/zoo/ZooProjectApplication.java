@@ -1,6 +1,7 @@
 package com.zoo;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,8 +15,11 @@ import com.zoo.domain.Staff;
 import com.zoo.repository.AnimalRepository;
 import com.zoo.repository.StaffRepository;
 import com.zoo.util.SampleDataGenerator;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @SpringBootApplication
+@EnableAsync
 public class ZooProjectApplication 
 {
 	
@@ -24,6 +28,17 @@ public class ZooProjectApplication
 	
 	@Autowired
 	StaffRepository staffRepository;
+
+	@Bean
+	public Executor asyncExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(2);
+		executor.setMaxPoolSize(2);
+		executor.setQueueCapacity(500);
+		executor.setThreadNamePrefix("GithubLookup-");
+		executor.initialize();
+		return executor;
+	}
 	
 
 	@Bean
