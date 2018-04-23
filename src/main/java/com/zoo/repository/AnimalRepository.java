@@ -1,15 +1,11 @@
 package com.zoo.repository;
 
-import java.util.List;
-import java.util.Set;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.zoo.domain.Animal;
+import com.zoo.domain.Staff;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.zoo.domain.Animal;
-import com.zoo.domain.Staff;
+import java.util.Set;
 
 public interface AnimalRepository extends BaseRepository<Animal, Long> {
 

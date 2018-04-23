@@ -1,12 +1,9 @@
 package com.zoo.repository;
 
-import java.util.Set;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.zoo.domain.Staff;
 import org.springframework.data.jpa.repository.Query;
 
-import com.zoo.domain.Staff;
+import java.util.Set;
 
 public interface StaffRepository extends BaseRepository<Staff, Long> {
 	
