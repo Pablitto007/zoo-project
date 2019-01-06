@@ -32,14 +32,13 @@ public class ZooProjectApplication
 	@Bean
 	public Executor asyncExecutor() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-		executor.setCorePoolSize(2);
-		executor.setMaxPoolSize(2);
-		executor.setQueueCapacity(500);
-		executor.setThreadNamePrefix("GithubLookup-");
+		executor.setCorePoolSize(Runtime.getRuntime().availableProcessors());
+		executor.setMaxPoolSize(10);
+		executor.setQueueCapacity(50);
+		executor.setThreadNamePrefix("Async-");
 		executor.initialize();
 		return executor;
 	}
-	
 
 	@Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {

@@ -1,6 +1,6 @@
 # zoo-project
 
-web CRUD applicattion, technologies used:  Java 8, Spring Boot  (MVC, Spring Data JPA, REST), Angularjs + Mateial Design
+web CRUD training app, technologies used:  Java 8, Spring Boot  (MVC, Spring Data JPA, REST), Angularjs + Mateial Design
 
 Two ways to run program:
 
@@ -10,16 +10,16 @@ Two ways to run program:
     * Run terminal and go to project folder
     * Make sure you are in folder containing pom.xml 
     * Type: mvn spring-boot:run
-    * Type localhost:8080 in your broswer or use any Rest Client
+    * Type localhost:8081 in your broswer or use any Rest Client
 
 2. With IDE:
 
     * git clone / download zip
     * Import maven project into your IDE
     * Run ApplicationStarter
-    * Type localhost:8080 in your broswer or use any Rest Client
+    * Type localhost:8081 in your broswer or use any Rest Client
     
- API is documented via Swagger, you may check it on localhost:8080/swagger-ui.html#
+ API is documented via Swagger, you may check it on localhost:8081/swagger-ui.html#
 
 Thanks!
 
