@@ -2,8 +2,8 @@
     'use strict';
     angular
         .module('mainModule')
-        .controller('csv.controller', ['$scope', 'dataService', '$log',
-            function ($scope, dataService, $log) {
+        .controller('csv.controller', ['$scope', 'dataService', '$log', '$mdDialog',
+            function ($scope, dataService, $log, $mdDialog) {
 
                 getAnimalsCSV();
 
@@ -11,40 +11,58 @@
                     dataService.getAnimalsCSV()
                         .then(
                             function (response) {
-                                console.log("ok");
-                                console.log("payload " + response.data);
-
-                                saveAs(response);
-                            }
-                            ,
+                                showMessage(response);
+                            },
                             function (error) {
-                                console.log('error during fetching  CSV data ' + error.data);
+                                $log.log('error during fetching  CSV data ' + error.data);
                             });
                 }
 
                 function saveAs(response) {
 
-                    console.log(typeof response.headers);
+                    $log.log("downloading file ");
 
-                    /* var fname = function (contentDisp) {
-                         if (contentDisp) {
-                             var result = contentDisp.split(';')[1].trim().split('=')[1];
-                             return result.replace(/"/g, '');
-                         }
+                    var fname = function (contentDisp) {
+                        if (contentDisp) {
+                            var result = contentDisp.split(';')[1].trim().split('=')[1];
+                            return result.replace(/"/g, '');
+                        }
+                        return 'default.csv';
+                    }(response.headers['Content-Disposition']);
 
-                         return 'animals1.csv';
-                     }(response.headers['Content-Disposition']);
-
-                     var link = document.createElement('a');
-                     link.download = fname;
-                     link.href = 'data:attachment/csv,' + encodeURI(response.data);
-                     link.target = '_blank'
-                     document.appendChild(link);
-                     link.click();*/
-
-                    //var file = new Blob([response.data], { type: 'text/csv' });
-                    //saveAs(file, 'filename.csv');
+                    download(response.data, fname, 'text/csv');
                 }
 
+                function showMessage(response) {
+                    var confirm = $mdDialog
+                        .confirm()
+                        .title('Report is ready')
+                        .ariaLabel('Lucky day')
+                        .ok('Save file')
+                        .cancel('Cancel');
+
+                    $mdDialog.show(confirm).then(function () {
+                        saveAs(response)
+                    });
+                };
+
+                // Function to download data to a file
+                function download(data, filename, type) {
+                    var file = new Blob([data], {type: type});
+                    if (window.navigator.msSaveOrOpenBlob) // IE10+
+                        window.navigator.msSaveOrOpenBlob(file, filename);
+                    else { // Others
+                        var a = document.createElement("a"),
+                            url = URL.createObjectURL(file);
+                        a.href = url;
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        a.click();
+                        setTimeout(function () {
+                            document.body.removeChild(a);
+                            window.URL.revokeObjectURL(url);
+                        }, 0);
+                    }
+                }
             }]);
 }());
