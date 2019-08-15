@@ -36,8 +36,9 @@
             </tr>
         </table>
         <section layout="row" layout-padding="">
-	       <cl-paging flex cl-pages="paging.total" , cl-steps="3" , 
-            cl-page-changed="paging.onPageChanged()" , cl-align="center center" , cl-current-page="paging.current">
+            <cl-paging flex cl-pages="paging.total" , cl-steps="3" ,
+                       cl-page-changed="paging.onPageChanged()" , cl-align="center center" ,
+                       cl-current-page="paging.current">
             </cl-paging>
         </section>
         <md-button ng-click="toggleLeft()" class="md-raised md-primary">+Add Animal</md-button>
@@ -48,8 +49,8 @@
 <!-- Side nav form -->
 <div ng-cloak>
 
-    <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4" 
-        md-theme='light-green'>
+    <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4"
+                md-theme='light-green'>
 
         <md-toolbar>
             <h1 class="md-toolbar-tools">Add new animal</h1>
@@ -59,11 +60,11 @@
                 <form name="animalForm">
                     <md-input-container class="md-block">
                         <label>Name</label>
-                        <input ng-model="animal.name"> </md-input-container>
+                        <input ng-model="animal.name"></md-input-container>
 
                     <md-input-container class="md-block">
                         <label>Species</label>
-                        <input ng-model="animal.spieces"> </md-input-container>
+                        <input ng-model="animal.spieces"></md-input-container>
 
                     <md-radio-group ng-model="animal.gender">
                         <md-radio-button value="F" class="md-primary">Female</md-radio-button>
@@ -72,15 +73,19 @@
 
                     <div layout-margin layout="row">
                         <label style="min-width: 180px;">Birth Date:</label>
-                        <md-datepicker ng-model="picker.birthDate" md-placeholder="Birth date" md-min-date="minDate" md-max-date="maxDate"> </md-datepicker>
+                        <md-datepicker ng-model="picker.birthDate" md-placeholder="Birth date" md-min-date="minDate"
+                                       md-max-date="maxDate"></md-datepicker>
                     </div>
 
                     <div layout-margin layout="row">
                         <label style="min-width: 180px;">Arrival Date:</label>
-                        <md-datepicker ng-model="picker.arrivalDate" md-placeholder="Arrival date" md-min-date="minDate" md-max-date="maxDate"> </md-datepicker>
+                        <md-datepicker ng-model="picker.arrivalDate" md-placeholder="Arrival date" md-min-date="minDate"
+                                       md-max-date="maxDate"></md-datepicker>
                     </div>
                     <div>
-                        <md-autocomplete ng-model="selectedItem" md-no-cache="true" md-selected-item="selectedItem" md-search-text="searchText" md-items="s in staff" md-item-text="s.name" md-min-length="0" placeholder="Pick Responsible Person">
+                        <md-autocomplete ng-model="selectedItem" md-no-cache="true" md-selected-item="selectedItem"
+                                         md-search-text="searchText" md-items="s in staff" md-item-text="s.name"
+                                         md-min-length="0" placeholder="Pick Responsible Person">
 
                             <md-item-template>
                                 <span>
@@ -95,11 +100,14 @@
 
                     <div layout="row" layout-margin>
                         <div flex="50">
-                            <md-button input type="submit" ng-click="addAnimal(animal)" class="md-raised md-primary">Add animal</md-button>
+                            <md-button input type="submit" ng-click="addAnimal(animal)" class="md-raised md-primary">Add
+                                animal
+                            </md-button>
                         </div>
                         <div flex="50">
                             <md-button ng-click="toggleLeft()" class="md-accent">
-                                Hide form </md-button>
+                                Hide form
+                            </md-button>
                         </div>
 
                     </div>
@@ -108,4 +116,4 @@
 		<pre>{{animal | json}}</pre-->
         </md-content>
     </md-sidenav>
-   </div>
+</div>

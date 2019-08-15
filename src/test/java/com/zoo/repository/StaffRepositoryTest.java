@@ -54,7 +54,7 @@ public class StaffRepositoryTest extends AbstractTransactionalJUnit4SpringContex
 
 	 @Test
 	 public void findBySupervisorTest() {
-		 Staff boss = staffRepository.findOne(3L).get();
+		 Staff boss = staffRepository.findById(3L).get();
 		 Set<Staff> inferiors = staffRepository.findBySupervisor(boss);
 		 assertEquals(inferiors.size(), 1);
 		 Staff inferior = inferiors.iterator().next();
@@ -63,7 +63,7 @@ public class StaffRepositoryTest extends AbstractTransactionalJUnit4SpringContex
 	 
 	 @Test
 		public void getOnePositive(){
-			Staff one = staffRepository.findOne(1L)
+			Staff one = staffRepository.findById(1L)
 					.orElseThrow(() -> new DataAccessResourceFailureException("id 1L not found"));
 			assertEquals(one.getName(), "Al");
 			assertEquals(one.getSurname(), "Abranow");
@@ -71,7 +71,7 @@ public class StaffRepositoryTest extends AbstractTransactionalJUnit4SpringContex
 		
 		@Test(expected = DataAccessResourceFailureException.class)
 		public void getOneNegative(){
-			Staff one = staffRepository.findOne(10L) //id does not exist
+			Staff one = staffRepository.findById(10L) //id does not exist
 					.orElseThrow(() -> new DataAccessResourceFailureException("id 10L not found"));
 		}
 }

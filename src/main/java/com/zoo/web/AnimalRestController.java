@@ -1,74 +1,71 @@
 package com.zoo.web;
 
-import java.util.Set;
-
+import com.zoo.domain.Animal;
+import com.zoo.domain.Staff;
+import com.zoo.repository.AnimalRepository;
+import com.zoo.repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import com.zoo.domain.Animal;
-import com.zoo.domain.Staff;
-import com.zoo.repository.AnimalRepository;
-import com.zoo.repository.StaffRepository;
+import java.util.List;
 
 
 @RestController
 @RequestMapping("/rest/animals")
 public class AnimalRestController {
 
-	private AnimalRepository aniamalRepository;
-	private StaffRepository staffRepository; 
-	private final int PAGE_SIZE = 5;
-	
-	@Autowired
-	public AnimalRestController(AnimalRepository aniamalRepository, StaffRepository staffRepository) {
-		this.aniamalRepository = aniamalRepository;
-		this.staffRepository = staffRepository;
-	}
+    private AnimalRepository aniamalRepository;
+    private StaffRepository staffRepository;
+    private final int PAGE_SIZE = 5;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public Set<Animal> getAllAnimals() {
-		Set<Animal> animals = aniamalRepository.findAll();
-		return animals;
-	}
-	
-	@RequestMapping(value = "/page/{pageNumber}",  method = RequestMethod.GET)
-	public Page<Animal> getPage(@PathVariable String pageNumber){
-		PageRequest request = 
-				new PageRequest((Integer.parseInt(pageNumber) -1), PAGE_SIZE, Sort.Direction.ASC, "name");
-		Page<Animal> page = aniamalRepository.findAll(request);
-		return page;
-	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	public void addAnimal(@RequestBody Animal animal, @PathVariable String id) {
-		
-		Staff responsiblePerson = staffRepository.findOne(Long.parseLong(id))
-				.orElseThrow(()-> new DataAccessResourceFailureException("Can not find staff id: " + id)) ;
-		
-		animal.setResponsiblePerson(responsiblePerson);
-		aniamalRepository.save(animal);
-	}
+    public AnimalRestController(AnimalRepository aniamalRepository, StaffRepository staffRepository) {
+        this.aniamalRepository = aniamalRepository;
+        this.staffRepository = staffRepository;
+    }
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Animal getOne(@PathVariable String id) {
-		Animal animal = aniamalRepository.findOne(Long.parseLong(id))
-				.orElseThrow(()-> new DataAccessResourceFailureException("Can not find animal id: " + id)) ;
-		return animal;
-	}
+    @GetMapping
+    public List<Animal> getAllAnimals() {
+        List<Animal> animals = aniamalRepository.findAll();
+        return animals;
+    }
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable String id) {
-		Animal animal = aniamalRepository.findOne(Long.parseLong(id))
-				.orElseThrow(()-> new DataAccessResourceFailureException("Can not find animal id: " + id)) ;
-		aniamalRepository.delete(animal);
-	}
+    @GetMapping("/page/{pageNumber}")
+    public Page<Animal> getPage(@PathVariable String pageNumber) {
+        PageRequest request =
+                PageRequest.of((Integer.parseInt(pageNumber) - 1), PAGE_SIZE, Sort.Direction.ASC, "name");
+        Page<Animal> page = aniamalRepository.findAll(request);
+        return page;
+    }
+
+    @PostMapping("/{staffId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Long addAnimal(@RequestBody Animal animal, @PathVariable Long staffId) {
+
+        Staff responsiblePerson = staffRepository.findById(staffId)
+                .orElseThrow(() -> new DataAccessResourceFailureException("Can not find staff id: " + staffId));
+
+        animal.setResponsiblePerson(responsiblePerson);
+        return aniamalRepository.save(animal).getId();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Animal> getOne(@PathVariable Long id) {
+        return aniamalRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        Animal animal = aniamalRepository.findById(id)
+                .orElseThrow(() -> new DataAccessResourceFailureException("Can not find animal id: " + id));
+        aniamalRepository.delete(animal);
+    }
 
 }

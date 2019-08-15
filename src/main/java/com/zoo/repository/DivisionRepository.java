@@ -1,7 +1,12 @@
 package com.zoo.repository;
 
 import com.zoo.domain.Division;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DivisionRepository extends BaseRepository<Division, Long> {
+import java.util.Set;
+
+public interface DivisionRepository extends JpaRepository<Division, Long> {
+
+    Set<Division> findByNameIgnoreCase(String name);
 
 }

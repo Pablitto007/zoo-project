@@ -1,5 +1,6 @@
 package com.zoo.domain;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -25,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  * @author Paweł (Pablitto007)
  */
 @Entity
-public class Staff {
+public class Staff implements Serializable {
 
 	@Id
 	@SequenceGenerator(name = "staffSeqGen", sequenceName = "SEQ_STAFF") // from DBMS																		

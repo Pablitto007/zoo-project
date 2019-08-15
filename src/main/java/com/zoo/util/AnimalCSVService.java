@@ -3,6 +3,7 @@ package com.zoo.util;
 import com.zoo.domain.Animal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -13,19 +14,27 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
 
 @Service
 public class AnimalCSVService {
 
     private final int CHUNK_SIZE = 20;
     private static final Logger LOGGER = LoggerFactory.getLogger(AnimalCSVService.class);
+    private final Executor executor;
 
-    @Async
-    public void getAnimalsAsync(HttpServletResponse response) {
+    @Autowired
+    public AnimalCSVService(Executor executor) {
+        this.executor = executor;
+    }
 
-        CompletableFuture.completedFuture(generateAnimalChunk())
+    public CompletableFuture<Void> getAnimalsAsync(HttpServletResponse response) {
+
+        return CompletableFuture.supplyAsync(() -> generateAnimalChunk(), executor)
                 .thenAccept(list -> {
-                    LOGGER.debug("Animals list size {} " , list.size());
+                    LOGGER.debug("Animals list size {} ", list.size());
+                    response.setContentType("text/csv");
+                    response.setHeader("Content-Disposition", "attachment; filename=\"animals.csv\"");
                     try (OutputStream outputStream = response.getOutputStream()) {
 
                         for (Animal animal : list) {
@@ -34,7 +43,7 @@ public class AnimalCSVService {
                         outputStream.flush();
 
                     } catch (IOException e) {
-                        LOGGER.error("get Animals Async exception  {}", e.getMessage());
+                        LOGGER.error("getAnimals() fail with exception {}", e.getMessage());
                     }
                 });
     }
