@@ -1,15 +1,13 @@
 package com.zoo.web;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.zoo.domain.Division;
 import com.zoo.repository.DivisionRepository;
@@ -25,15 +23,15 @@ public class DivisionRestController {
 		this.divisionRepository = divisionRepository;
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	public Set<Division> getAll(){
-		Set<Division> division = divisionRepository.findAll();
+	@GetMapping
+	public List<Division> getAll(){
+		List<Division> division = divisionRepository.findAll();
 		return division;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@GetMapping("/{id}")
 	public Division getOne(@PathVariable String id){
-		Division division = divisionRepository.findOne(Long.parseLong(id))
+		Division division = divisionRepository.findById(Long.parseLong(id))
 				.orElseThrow(()-> new DataAccessResourceFailureException("Can not find division id: " + id)) ;
 		return division;
 	}

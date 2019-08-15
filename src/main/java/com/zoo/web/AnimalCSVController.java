@@ -8,14 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-@Controller
+@RestController
 @RequestMapping("csv/animals")
 public class AnimalCSVController {
 
@@ -29,11 +31,10 @@ public class AnimalCSVController {
     }
 
     @GetMapping("/all")
-    public void getAnimals(HttpServletResponse response) throws ExecutionException, InterruptedException {
+    public CompletableFuture<Void> getAnimals(HttpServletResponse response) throws ExecutionException, InterruptedException {
         LOGGER.info("Received new csv request");
         //response.setHeader("Transfer-Encoding", "chunked");
-        response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "attachment; filename=\"animals.csv\"");
-        animalCSVService.getAnimalsAsync(response);
+
+        return animalCSVService.getAnimalsAsync(response);
     }
 }

@@ -36,6 +36,7 @@ public class Animal {
 
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String spieces;
 

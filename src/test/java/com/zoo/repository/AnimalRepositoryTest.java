@@ -69,7 +69,7 @@ public class AnimalRepositoryTest extends AbstractTransactionalJUnit4SpringConte
 	
 	@Test
 	public void getOnePositive(){
-		Animal one = animalRepository.findOne(1L)
+		Animal one = animalRepository.findById(1L)
 				.orElseThrow(() -> new DataAccessResourceFailureException("id 1L not found"));
 		assertEquals(one.getName(), "Anatol");
 		assertEquals(one.getBirthDate(), LocalDate.of(2013, Month.JANUARY, 1));
@@ -78,7 +78,7 @@ public class AnimalRepositoryTest extends AbstractTransactionalJUnit4SpringConte
 
 	@Test(expected = DataAccessResourceFailureException.class)
 	public void getOneNegative(){
-		Animal one = animalRepository.findOne(10L)
+		Animal one = animalRepository.findById(10L)
 				.orElseThrow(() -> new DataAccessResourceFailureException("id 10L not found"));
 	}
 

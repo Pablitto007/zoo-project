@@ -5,9 +5,9 @@
         .factory('dataService', ['$http', function ($http) {
 
             var dataService = {};
-            var urlAnimalTemplate = 'http://localhost:8080/rest/animals/';
-            var urlStaffTemplate = 'http://localhost:8080/rest/staff/';
-            var urlCSVAnimals = 'http://localhost:8080/csv/animals/';
+            var urlAnimalTemplate = 'http://localhost:8081/rest/animals/';
+            var urlStaffTemplate = 'http://localhost:8081/rest/staff/';
+            var urlCSVAnimals = 'http://localhost:8081/csv/animals/';
 
             dataService.getAnimals = function () {
                 return $http({
@@ -18,13 +18,25 @@
             };
 
             dataService.getAnimalsCSV = function () {
+                //var deferred = $q.defer();
+                /*$http.get(urlCSVAnimals + 'all')
+                    .success(function(response){
+                        saveAs(response);
+                        deferred.resolve(response);
+                    });
+                return deferred.promise();*/
+
+                /*$http.get(urlCSVAnimals + 'all')
+                    .then(function(response){
+                        saveAs(response);
+                        deferred.resolve(response);
+                    });
+                return deferred.promise();*/
+
+
                 return $http({
                     method: 'GET',
-                    url: urlCSVAnimals + 'all',
-                    headers: {
-                        'Content-Type': 'text/csv'
-                    },
-                    data: ''
+                    url: urlCSVAnimals + 'all'
                 });
             };
 
@@ -78,6 +90,7 @@
                     data: staff
                 });
             };
+
 
             return dataService;
 
