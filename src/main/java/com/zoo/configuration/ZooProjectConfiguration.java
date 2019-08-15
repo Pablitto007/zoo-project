@@ -26,5 +26,4 @@ public class ZooProjectConfiguration extends WebSecurityConfigurerAdapter {
         executor.initialize();
         return executor;
     }
-
 }

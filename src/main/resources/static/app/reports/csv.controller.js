@@ -20,8 +20,6 @@
 
                 function saveAs(response) {
 
-                    $log.log("downloading file ");
-
                     var fname = function (contentDisp) {
                         if (contentDisp) {
                             var result = contentDisp.split(';')[1].trim().split('=')[1];
@@ -34,6 +32,8 @@
                 }
 
                 function showMessage(response) {
+                    $log.log("downloading file ");
+
                     var confirm = $mdDialog
                         .confirm()
                         .title('Report is ready')
